@@ -52,12 +52,23 @@ class EditableAction extends Action
      */
     public function run()
     {
-        $name = Yii::$app->request->post('name');
-        $value = Yii::$app->request->post('value');
 
-        $this->model->updateAttributes([$name => $value]);
+        if (isset($_POST['hasEditable'])) {
+            // read your posted model attributes
+            if ($this->model->load($_POST) && $this->model->validate() && $this->model->save()) {
 
-        return Json::encode(Yii::$app->request->post());
+                // return JSON encoded output in the below format
+                echo \yii\helpers\Json::encode(['output'=>'', 'message'=>'']);
+
+                // alternatively you can return a validation error
+                // echo \yii\helpers\Json::encode(['output'=>'', 'message'=>'Validation error']);
+            }
+            // else if nothing to do always return an empty JSON encoded output
+            else {
+                echo \yii\helpers\Json::encode(['output'=>'', 'message'=>'']);
+            }
+            return;
+        }
     }
 
 }

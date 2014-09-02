@@ -229,7 +229,7 @@ class User extends ActiveRecord implements IdentityInterface
 	 */
 	public function validatePassword($password)
 	{
-		return Yii::$app->getSecurity()->validatePassword($password, $this->password_hash);
+		return Yii::$app->security->validatePassword($password, $this->password_hash);
 	}
 
     /**
@@ -239,7 +239,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function setPassword($password)
     {
-        $this->password_hash = Yii::$app->getSecurity()->generatePasswordHash($password);
+        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
     /**
@@ -247,7 +247,8 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function generateAuthKey()
     {
-        $this->auth_key = Yii::$app->getSecurity()->generateRandomKey();
+        $this->auth_key = Yii::$app->security->generateRandomString();
+
     }
 
     /**
@@ -255,7 +256,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function generatePasswordResetToken()
     {
-        $this->password_reset_token = Yii::$app->getSecurity()->generateRandomKey() . '_' . time();
+        $this->password_reset_token = Yii::$app->security->generateRandomKey() . '_' . time();
     }
 
     /**
@@ -285,7 +286,8 @@ class User extends ActiveRecord implements IdentityInterface
 			if ($this->isNewRecord) {
 				$this->generateAuthKey();
 			}
-			if ($this->getScenario() !== \yii\web\User::EVENT_AFTER_LOGIN) {
+
+            if ($this->getScenario() !== \yii\web\User::EVENT_AFTER_LOGIN) {
 				$this->setAttribute('updated_at', time());
 			}
 

@@ -1,10 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
-use cabbage\widgets\Editable;
+use kartik\editable\Editable;
 use cabbage\widgets\JqueryPlugin;
-use yii\bootstrap\ActiveForm;
 
 /**
  * @var yii\web\View $this
@@ -16,18 +14,9 @@ $this->params['breadcrumbs'][] = $this->title;
 $asset = \user\UserAsset::register($this);
 ?>
 <div class="row">
-    <?= Html::beginForm(Yii::$app->urlManager->createUrl(['user/profile/upload']), 'post', ['id'=>'file-input', 'enctype'=>'multipart/form-data']) ?>
-    <?= Html::fileInput('file-input') ?>
-    <?= Html::endForm() ?>
-    <?= Html::button('sub', ['id'=>'file-submit']) ?>
-    <?php
-    $this->registerJs(<<<STR
-$('#file-submit').click(function(){
-    $('#file-input').submit();
-})
-STR
-);
-    ?>
+    <div class="col-xs-6">
+
+    </div>
 </div>
 <div class="row">
 <div class="col-xs-12">
@@ -37,21 +26,22 @@ STR
 <div class="col-xs-12 col-sm-3 center">
     <div>
         <span class="profile-picture">
-            <?=
-            Editable::widget([
-                'model' => $model,
-                'attribute' => 'thumb',
-                'url' => 'user/profile/upload',
-                'type' => 'image',
-                'tag' => 'img',
-                'clientOptions' => [
-                ],
-                'options' => [
-                    'class' => 'editable img-responsive editable-click editable-empty',
-                    'src' => $asset->baseUrl . "/images/profile-pic.jpg",
-                    'alt' => Yii::$app->user->identity->username,
-                ],
-            ]);?>
+        <?=
+                        \cabbage\widgets\Editable::widget([
+                            'model' => $model,
+                            'attribute' => 'thumb',
+                            'url' => 'user/profile/upload',
+                            'type' => 'image',
+                            'tag' => 'img',
+                            'clientOptions' => [
+                            ],
+                            'options' => [
+                                'class' => 'editable img-responsive editable-click editable-empty',
+                                'src' => $asset->baseUrl . "/images/profile-pic.jpg",
+                                'alt' => Yii::$app->user->identity->username,
+                            ],
+                        ]);
+            ?>
         </span>
 
 
@@ -206,13 +196,13 @@ STR
         <div class="profile-info-name"> <?= Yii::t('user.common', 'Username') ?></div>
 
         <div class="profile-info-value">
-            <?=
-            Editable::widget([
+            <?php
+            echo \kartik\editable\Editable::widget([
                 'model' => $model,
                 'attribute' => 'username',
-                'url' => 'profile/editable',
-                'type' => Editable::TYPE_TEXT,
-            ])
+                'inputType' => \kartik\editable\Editable::INPUT_TEXT,
+                'formOptions' => ['action' => ['editable']]
+            ]);
             ?>
         </div>
     </div>
@@ -222,13 +212,13 @@ STR
         <div class="profile-info-name"> <?= Yii::t('user.common', 'Email') ?></div>
 
         <div class="profile-info-value">
-            <?=
-            Editable::widget([
+            <?php
+            echo \kartik\editable\Editable::widget([
                 'model' => $model,
                 'attribute' => 'email',
-                'url' => 'profile/editable',
-                'type' => Editable::TYPE_TEXT,
-            ])
+                'inputType' => \kartik\editable\Editable::INPUT_TEXT,
+                'formOptions' => ['action' => ['editable']]
+            ]);
             ?>
         </div>
     </div>

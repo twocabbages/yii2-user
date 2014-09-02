@@ -10,6 +10,15 @@ $this->title = 'Signup';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="login-container">
+    <div class="center">
+        <h1>
+            <i class="icon-leaf green"></i>
+            <span class="red">Ace</span>
+            <span class="white">Application</span>
+        </h1>
+        <h4 class="blue">© Company Name</h4>
+    </div>
+    <div class="space-6"></div>
     <div id="signup-box" class="signup-box widget-box no-border visible">
         <div class="widget-body">
             <div class="widget-main">
